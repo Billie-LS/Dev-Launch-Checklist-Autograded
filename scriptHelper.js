@@ -33,54 +33,82 @@ const validateInput = (testInput) => {
     : "Not a Number";
 };
 
-// const validateInput = (testInput) => {
-//   if (testInput === "") {
-//     return "Empty";
-//   }
-//   if (!isNaN(testInput)) {
-//     return "Is a Number";
-//   }
-//   return "Not a Number";
-// };
-
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-  let pilotValidation = validateInput(pilot);
-  let copilotValidation = validateInput(copilot);
-  let fuelValidation = validateInput(fuelLevel);
-  let cargoValidation = validateInput(cargoLevel);
-
-  if (
-    pilotValidation === "Empty" ||
-    copilotValidation === "Empty" ||
-    fuelValidation === "Empty" ||
-    cargoValidation === "Empty"
-  ) {
+  // Validate input fields
+  if (pilot === "" || copilot === "" || fuelLevel === "" || cargoLevel === "") {
     alert("All fields are required!");
     return;
   }
 
-  if (
-    pilotValidation !== "Is a Number" ||
-    copilotValidation !== "Is a Number" ||
-    fuelValidation !== "Is a Number" ||
-    cargoValidation !== "Is a Number"
-  ) {
+  if (isNaN(fuelLevel) || isNaN(cargoLevel)) {
     alert("Please enter valid information for all fields!");
     return;
   }
 
-  // rest of form submission logic
+  // Update pilot status
+  document.getElementById(
+    "pilotStatus"
+  ).innerHTML = `Pilot ${pilot} is ready for launch`;
+
+  // Update copilot status
+  document.getElementById(
+    "copilotStatus"
+  ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
+
+  // Check fuel level
+  if (fuelLevel < 10000) {
+    // Update faulty items list and display
+    document.getElementById("faultyItems").style.visibility = "visible";
+    document.getElementById("fuelStatus").innerHTML =
+      "There is not enough fuel for the journey";
+
+    // Update launch status
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle not ready for launch";
+    document.getElementById("launchStatus").style.color = "red";
+  }
+
+  // Check cargo mass
+  if (cargoLevel > 10000) {
+    // Update faulty items list and display
+    document.getElementById("faultyItems").style.visibility = "visible";
+    document.getElementById("cargoStatus").innerHTML =
+      "There is too much mass for the shuttle to take off";
+
+    // Update launch status
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle not ready for launch";
+    document.getElementById("launchStatus").style.color = "red";
+  }
+
+  // Check if shuttle is ready for launch
+  if (fuelLevel >= 10000 && cargoLevel <= 10000) {
+    // Hide faulty items list
+    document.getElementById("faultyItems").style.visibility = "hidden";
+
+    // Update launch status
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle is ready for launch";
+    document.getElementById("launchStatus").style.color = "green";
+  }
 }
 
 async function myFetch() {
   let planetsReturned;
-
-  planetsReturned = await fetch().then(function (response) {});
-
+  // Fetch planetary JSON data
+  planetsReturned = await fetch(
+    "https://handlers.education.launchcode.org/static/planets.json"
+  ).then(function (response) {
+    return response.json();
+  });
   return planetsReturned;
 }
 
-function pickPlanet(planets) {}
+function pickPlanet(planets) {
+  // Select a random planet from the list
+  const randomIndex = Math.floor(Math.random() * planets.length);
+  return planets[randomIndex];
+}
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
