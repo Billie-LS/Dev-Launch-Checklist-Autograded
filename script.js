@@ -1,8 +1,11 @@
 // Write your JavaScript code here!
+// Write your JavaScript code here!
 window.addEventListener("load", function () {
+  let listedPlanets;
   let listedPlanetsResponse = myFetch(); // Set listedPlanetsResponse equal to the value returned by calling myFetch()
   listedPlanetsResponse.then(function (result) {
-    const selectedPlanet = pickPlanet(result); // Select a planet at random from the fetched planets
+    listedPlanets = result;
+    const selectedPlanet = pickPlanet(listedPlanets); // Select a planet at random from listedPlanets
     addDestinationInfo(
       document,
       selectedPlanet.name,
@@ -21,16 +24,14 @@ window.addEventListener("load", function () {
     let copilotNameInput = document.querySelector("input[name=copilotName]");
     let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
     let cargoMassInput = document.querySelector("input[name=cargoMass]");
-    myFetch().then(function (result) {
-      formSubmission(
-        document,
-        result,
-        pilotNameInput.value,
-        copilotNameInput.value,
-        fuelLevelInput.value,
-        cargoMassInput.value
-      );
-    });
+    formSubmission(
+      document,
+      listedPlanets,
+      pilotNameInput.value,
+      copilotNameInput.value,
+      fuelLevelInput.value,
+      cargoMassInput.value
+    );
   }
 
   // Event listener for form submission

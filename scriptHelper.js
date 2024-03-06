@@ -11,18 +11,19 @@ function addDestinationInfo(
   moons,
   imageUrl
 ) {
-  // Here is the HTML formatting for our mission target div.
-  /*
-                 <h2>Mission Destination</h2>
-                 <ol>
-                     <li>Name: </li>
-                     <li>Diameter: </li>
-                     <li>Star: ${star}</li>
-                     <li>Distance from Earth: </li>
-                     <li>Number of Moons: </li>
-                 </ol>
-                 <img src="">
-    */
+  // Add the selected planet's information to the missionTarget div
+  const missionTargetDiv = document.getElementById("missionTarget");
+  missionTargetDiv.innerHTML = `
+        <h2>Mission Destination</h2>
+        <ol>
+            <li>Name: ${name}</li>
+            <li>Diameter: ${diameter}</li>
+            <li>Star: ${star}</li>
+            <li>Distance from Earth: ${distance}</li>
+            <li>Number of Moons: ${moons}</li>
+        </ol>
+        <img src="${imageUrl}">
+    `;
 }
 
 const validateInput = (testInput) => {
@@ -60,12 +61,16 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     // Update faulty items list and display
     document.getElementById("faultyItems").style.visibility = "visible";
     document.getElementById("fuelStatus").innerHTML =
-      "There is not enough fuel for the journey";
+      "Fuel level too low for launch";
 
     // Update launch status
     document.getElementById("launchStatus").innerHTML =
-      "Shuttle not ready for launch";
+      "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
+  } else {
+    // Reset fuel status if fuel level is sufficient
+    document.getElementById("fuelStatus").innerHTML =
+      "Fuel level high enough for launch";
   }
 
   // Check cargo mass
@@ -73,12 +78,16 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     // Update faulty items list and display
     document.getElementById("faultyItems").style.visibility = "visible";
     document.getElementById("cargoStatus").innerHTML =
-      "There is too much mass for the shuttle to take off";
+      "Cargo mass too heavy for launch";
 
     // Update launch status
     document.getElementById("launchStatus").innerHTML =
-      "Shuttle not ready for launch";
+      "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
+  } else {
+    // Reset cargo status if cargo mass is within limits
+    document.getElementById("cargoStatus").innerHTML =
+      "Cargo mass low enough for launch";
   }
 
   // Check if shuttle is ready for launch
@@ -88,7 +97,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     // Update launch status
     document.getElementById("launchStatus").innerHTML =
-      "Shuttle is ready for launch";
+      "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
   }
 }
