@@ -46,10 +46,3 @@ window.addEventListener("load", function () {
   let form = document.querySelector("form");
   form.addEventListener("submit", handleSubmit);
 });
-
-// Check the visibility of the "faultyItems" div after form submission
-const launchStatus = document.getElementById("launchStatus");
-if (launchStatus.textContent === "Shuttle is Ready for Launch") {
-  const faultyItems = document.getElementById("faultyItems");
-  faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
-}
