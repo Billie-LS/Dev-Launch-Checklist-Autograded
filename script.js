@@ -30,20 +30,16 @@ window.addEventListener("load", function () {
       fuelLevelInput.value,
       cargoMassInput.value
     );
-    // Check if everything is good to go
-    const launchStatus = document.getElementById("launchStatus");
-    console.log("Launch Status:", launchStatus.textContent);
-    if (launchStatus.textContent !== "Shuttle is Ready for Launch") {
-      const faultyItems = document.getElementById("faultyItems");
-      faultyItems.style.visibility = "visible"; // Show the element
-      console.log("faultyItems visibility:", faultyItems.style.visibility);
-    } else {
-      const faultyItems = document.getElementById("faultyItems");
-      faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
-    }
   }
 
   // Event listener for form submission
   let form = document.querySelector("form");
   form.addEventListener("submit", handleSubmit);
 });
+
+// Check the visibility of the "faultyItems" div after form submission
+const launchStatus = document.getElementById("launchStatus");
+if (launchStatus.textContent === "Shuttle is Ready for Launch") {
+  const faultyItems = document.getElementById("faultyItems");
+  faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
+}
