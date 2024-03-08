@@ -1,4 +1,3 @@
-// Write your JavaScript code here!
 window.addEventListener("load", function () {
   let listedPlanets;
   let listedPlanetsResponse = myFetch(); // Set listedPlanetsResponse equal to the value returned by calling myFetch()
@@ -38,6 +37,9 @@ window.addEventListener("load", function () {
       const faultyItems = document.getElementById("faultyItems");
       faultyItems.style.visibility = "visible"; // Show the element
       console.log("faultyItems visibility:", faultyItems.style.visibility);
+    } else {
+      const faultyItems = document.getElementById("faultyItems");
+      faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
     }
   }
 
