@@ -97,8 +97,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
   }
 
   if (fuelLevel >= 10000 && cargoLevel <= 10000) {
-    // Hide the faultyItems div when everything is good to go
-    document.getElementById("faultyItems").style.visibility = "hidden";
+    document.getElementById("faultyItems").style.visibility = "hidden"; // Hide the faultyItems div
     document.getElementById("launchStatus").innerHTML =
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
