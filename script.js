@@ -1,5 +1,4 @@
 // Write your JavaScript code here!
-// Write your JavaScript code here!
 window.addEventListener("load", function () {
   let listedPlanets;
   let listedPlanetsResponse = myFetch(); // Set listedPlanetsResponse equal to the value returned by calling myFetch()
@@ -32,6 +31,14 @@ window.addEventListener("load", function () {
       fuelLevelInput.value,
       cargoMassInput.value
     );
+    // Check if everything is good to go
+    const launchStatus = document.getElementById("launchStatus");
+    console.log("Launch Status:", launchStatus.textContent);
+    if (launchStatus.textContent !== "Shuttle is Ready for Launch") {
+      const faultyItems = document.getElementById("faultyItems");
+      faultyItems.style.visibility = "visible"; // Show the element
+      console.log("faultyItems visibility:", faultyItems.style.visibility);
+    }
   }
 
   // Event listener for form submission
