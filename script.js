@@ -30,6 +30,16 @@ window.addEventListener("load", function () {
       fuelLevelInput.value,
       cargoMassInput.value
     );
+    // Check if everything is good to go
+    const launchStatus = document.getElementById("launchStatus");
+    console.log("Launch Status:", launchStatus.textContent);
+    const faultyItems = document.getElementById("faultyItems");
+    if (launchStatus.textContent !== "Shuttle is Ready for Launch") {
+      faultyItems.style.visibility = "visible"; // Show the element
+      console.log("faultyItems visibility:", faultyItems.style.visibility);
+    } else {
+      faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
+    }
   }
 
   // Event listener for form submission
