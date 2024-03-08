@@ -105,14 +105,6 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
   }
 }
 
-module.exports = {
-  addDestinationInfo,
-  validateInput,
-  formSubmission,
-  pickPlanet,
-  myFetch,
-};
-
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
 module.exports.formSubmission = formSubmission;
