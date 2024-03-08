@@ -1,9 +1,9 @@
 window.addEventListener("load", function () {
   let listedPlanets;
-  let listedPlanetsResponse = myFetch(); // Set listedPlanetsResponse equal to the value returned by calling myFetch()
+  let listedPlanetsResponse = myFetch();
   listedPlanetsResponse.then(function (result) {
     listedPlanets = result;
-    const selectedPlanet = pickPlanet(listedPlanets); // Select a planet at random from listedPlanets
+    const selectedPlanet = pickPlanet(listedPlanets);
     addDestinationInfo(
       document,
       selectedPlanet.name,
@@ -12,10 +12,9 @@ window.addEventListener("load", function () {
       selectedPlanet.distance,
       selectedPlanet.moons,
       selectedPlanet.imageUrl
-    ); // Add the selected planet's information to the missionTarget div
+    );
   });
 
-  // Helper function to handle form submission
   function handleSubmit(event) {
     event.preventDefault();
     let pilotNameInput = document.querySelector("input[name=pilotName]");
@@ -30,26 +29,23 @@ window.addEventListener("load", function () {
       fuelLevelInput.value,
       cargoMassInput.value
     );
-    // Check if everything is good to go
+
     const launchStatus = document.getElementById("launchStatus");
-    console.log("Launch Status:", launchStatus.textContent);
     const faultyItems = document.getElementById("faultyItems");
-    if (launchStatus.textContent !== "Shuttle is Ready for Launch") {
-      faultyItems.style.visibility = "visible"; // Show the element
-      console.log("faultyItems visibility:", faultyItems.style.visibility);
+
+    if (launchStatus.textContent === "Shuttle is Ready for Launch") {
+      faultyItems.style.visibility = "hidden";
     } else {
-      faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
+      faultyItems.style.visibility = "visible";
     }
   }
 
-  // Event listener for form submission
   let form = document.querySelector("form");
   form.addEventListener("submit", handleSubmit);
 
-  // Check the visibility of the "faultyItems" div after form submission
   const launchStatus = document.getElementById("launchStatus");
   if (launchStatus.textContent === "Shuttle is Ready for Launch") {
     const faultyItems = document.getElementById("faultyItems");
-    faultyItems.style.visibility = "hidden"; // Hide the element when everything is good to go
+    faultyItems.style.visibility = "hidden";
   }
 });
