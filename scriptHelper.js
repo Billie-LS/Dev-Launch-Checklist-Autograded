@@ -2,21 +2,19 @@
 
 require("cross-fetch/polyfill");
 
-const myFetch = async () => {
-  try {
-    const response = await fetch(
-      "https://handlers.education.launchcode.org/static/planets.json"
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch planets data");
-    }
-    const planetsReturned = await response.json();
-    return planetsReturned;
-  } catch (error) {
-    console.error("Error fetching planets data:", error.message);
+async function myFetch() {
+  const response = await fetch(
+    "https://handlers.education.launchcode.org/static/planets.json"
+  );
+
+  if (!response.ok) {
+    console.error("Failed to fetch planets data");
     return [];
   }
-};
+
+  const planetsReturned = await response.json();
+  return planetsReturned;
+}
 
 const pickPlanet = (planets) => {
   const randomIndex = Math.floor(Math.random() * planets.length);
