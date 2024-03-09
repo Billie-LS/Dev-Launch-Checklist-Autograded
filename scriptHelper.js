@@ -103,7 +103,7 @@ const formSubmission = (
 
   if (fuelLevel >= 10000 && cargoLevel <= 10000) {
     // Both fuel level and cargo level are within acceptable ranges
-    document.getElementById("faultyItems").style.visibility = "hidden";
+    document.getElementById("faultyItems").style.visibility = "hidden"; // Hide faulty items
     document.getElementById("launchStatus").innerHTML =
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
