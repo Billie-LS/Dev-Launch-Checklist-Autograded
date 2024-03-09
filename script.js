@@ -1,4 +1,4 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   let listedPlanets;
   let listedPlanetsResponse = myFetch();
   listedPlanetsResponse.then(function (result) {
@@ -15,7 +15,7 @@ window.addEventListener("load", function () {
     );
   });
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
     let pilotNameInput = document.querySelector("input[name=pilotName]");
     let copilotNameInput = document.querySelector("input[name=copilotName]");
@@ -33,6 +33,8 @@ window.addEventListener("load", function () {
     const launchStatus = document.getElementById("launchStatus");
     const faultyItems = document.getElementById("faultyItems");
 
+    console.log("Launch status text content:", launchStatus.textContent);
+
     if (launchStatus.textContent !== "Shuttle is Ready for Launch") {
       // Show the faultyItems when there are issues with the launch
       faultyItems.style.visibility = "visible";
@@ -40,7 +42,7 @@ window.addEventListener("load", function () {
       // Hide the faultyItems when everything is good to go
       faultyItems.style.visibility = "hidden";
     }
-  }
+  };
 
   let form = document.querySelector("form");
   form.addEventListener("submit", handleSubmit);

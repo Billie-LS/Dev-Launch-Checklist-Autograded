@@ -1,7 +1,5 @@
 // Write your helper functions here!
 
-// Write your helper functions here!
-
 require("cross-fetch/polyfill");
 
 async function myFetch() {
@@ -20,12 +18,12 @@ async function myFetch() {
   }
 }
 
-function pickPlanet(planets) {
+const pickPlanet = (planets) => {
   const randomIndex = Math.floor(Math.random() * planets.length);
   return planets[randomIndex];
-}
+};
 
-function addDestinationInfo(
+const addDestinationInfo = (
   document,
   name,
   diameter,
@@ -33,7 +31,7 @@ function addDestinationInfo(
   distance,
   moons,
   imageUrl
-) {
+) => {
   const missionTargetDiv = document.getElementById("missionTarget");
   missionTargetDiv.innerHTML = `
     <h2>Mission Destination</h2>
@@ -46,17 +44,24 @@ function addDestinationInfo(
     </ol>
     <img src="${imageUrl}">
   `;
-}
+};
 
-function validateInput(testInput) {
+const validateInput = (testInput) => {
   return testInput === ""
     ? "Empty"
     : !isNaN(testInput)
     ? "Is a Number"
     : "Not a Number";
-}
+};
 
-function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+const formSubmission = (
+  document,
+  list,
+  pilot,
+  copilot,
+  fuelLevel,
+  cargoLevel
+) => {
   if (pilot === "" || copilot === "" || fuelLevel === "" || cargoLevel === "") {
     alert("All fields are required!");
     return;
@@ -104,7 +109,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
   }
-}
+};
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
