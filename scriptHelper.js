@@ -2,7 +2,7 @@
 
 require("cross-fetch/polyfill");
 
-async function myFetch() {
+const myFetch = async () => {
   try {
     const response = await fetch(
       "https://handlers.education.launchcode.org/static/planets.json"
@@ -16,7 +16,7 @@ async function myFetch() {
     console.error("Error fetching planets data:", error.message);
     return [];
   }
-}
+};
 
 const pickPlanet = (planets) => {
   const randomIndex = Math.floor(Math.random() * planets.length);
@@ -104,10 +104,17 @@ const formSubmission = (
   }
 
   if (fuelLevel >= 10000 && cargoLevel <= 10000) {
-    document.getElementById("faultyItems").style.visibility = "hidden"; // Hide the faultyItems div
+    // Both fuel level and cargo level are within acceptable ranges
+    document.getElementById("faultyItems").style.visibility = "hidden";
     document.getElementById("launchStatus").innerHTML =
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
+  } else {
+    // At least one condition is not met, so show the faulty items
+    document.getElementById("faultyItems").style.visibility = "visible";
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle Not Ready for Launch";
+    document.getElementById("launchStatus").style.color = "red";
   }
 };
 
