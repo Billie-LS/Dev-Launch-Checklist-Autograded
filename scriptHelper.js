@@ -67,6 +67,9 @@ const formSubmission = (
   let launchStatus = document.getElementById("launchStatus");
   let cargoStatus = document.getElementById("cargoStatus");
 
+  // Reset previous changes
+  list.style.visibility = "hidden";
+
   // Check if all fields are filled
   if (
     validateInput(pilot) === "Empty" ||
