@@ -128,9 +128,14 @@ const formSubmission = (
     cargoStatus.innerHTML === `Cargo mass low enough for launch`
   ) {
     // Hide the list if everything is fine
-    list.style.visibility = `hidden`;
+    list.style.visibility = `hidden`; // Make sure the list is hidden
     launchStatus.innerHTML = `Shuttle is Ready for Launch`;
     launchStatus.style.color = `green`;
+  } else {
+    // If there are any issues, show the list
+    list.style.visibility = `visible`;
+    launchStatus.innerHTML = `Shuttle Not Ready for Launch`;
+    launchStatus.style.color = `red`;
   }
 };
 

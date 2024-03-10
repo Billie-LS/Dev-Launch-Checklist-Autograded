@@ -23,6 +23,12 @@ const handleFormSubmit = async () => {
 
   // Use formSubmission to validate and update list
   formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel);
+
+  // Check if everything is fine
+  if (list.style.visibility !== "visible") {
+    // Hide the list if everything is fine
+    list.style.visibility = "hidden";
+  }
 };
 
 // Event listener for when the window loads
