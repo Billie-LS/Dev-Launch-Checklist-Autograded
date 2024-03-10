@@ -127,13 +127,14 @@ const formSubmission = (
     fuelStatus.innerHTML === `Fuel level high enough for launch` &&
     cargoStatus.innerHTML === `Cargo mass low enough for launch`
   ) {
-    // Hide the list if everything is fine
-    list.style.visibility = `hidden`; // Make sure the list is hidden
+    console.log("Hiding list...");
+    // Hide the list only when everything is fine
+    list.style.visibility = `hidden`;
     launchStatus.innerHTML = `Shuttle is Ready for Launch`;
     launchStatus.style.color = `green`;
   } else {
+    console.log("Not hiding list...");
     // If there are any issues, show the list
-    list.style.visibility = `visible`;
     launchStatus.innerHTML = `Shuttle Not Ready for Launch`;
     launchStatus.style.color = `red`;
   }
