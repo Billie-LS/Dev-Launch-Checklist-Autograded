@@ -2,26 +2,127 @@
 
 require("cross-fetch/polyfill");
 
-const myFetch = async () => {
-  const response = await fetch(
-    "https://handlers.education.launchcode.org/static/planets.json"
-  );
+// Alert function to notify the user if any field is empty
+function alertEmptyFields() {
+  alert("All fields are required!");
+}
 
-  if (!response.ok) {
-    console.error("Failed to fetch planets data");
-    return [];
+// Alert function to notify the user if incorrect data is entered
+function alertInvalidInput(field) {
+  alert(`Invalid input for ${field}! Please enter valid data.`);
+}
+
+// Validate input function to check if input is empty, a number, or not a number
+function validateInput(input) {
+  if (input === "") {
+    return "Empty";
+  } else if (isNaN(input)) {
+    return "Not a Number";
+  } else {
+    return "Is a Number";
+  }
+}
+
+// Form submission function
+function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+  // Check if any field is empty
+  if (
+    validateInput(pilot) === "Empty" ||
+    validateInput(copilot) === "Empty" ||
+    validateInput(fuelLevel) === "Empty" ||
+    validateInput(cargoLevel) === "Empty"
+  ) {
+    alertEmptyFields();
+    return;
   }
 
-  const planetsReturned = await response.json();
+  // Check if pilot and copilot names are strings
+  if (
+    validateInput(pilot) !== "Is a Number" &&
+    validateInput(copilot) !== "Is a Number"
+  ) {
+    // Proceed with form submission logic...
+  } else {
+    alertInvalidInput("pilot or copilot names");
+    return;
+  }
+
+  // Check if fuel level and cargo mass are numbers
+  if (!isNaN(parseFloat(fuelLevel)) && !isNaN(parseFloat(cargoLevel))) {
+    // Proceed with form submission logic...
+
+    let isFuelLow = false;
+    let isCargoHeavy = false;
+
+    // Update the shuttle requirements based on fuel level
+    if (fuelLevel < 10000) {
+      document.getElementById("faultyItems").style.visibility = "visible";
+      document.getElementById("fuelStatus").innerHTML =
+        "Fuel level too low for launch"; // Corrected message
+      isFuelLow = true;
+    }
+
+    // Update the shuttle requirements based on cargo mass
+    if (cargoLevel > 10000) {
+      document.getElementById("faultyItems").style.visibility = "visible";
+      document.getElementById("cargoStatus").innerHTML =
+        "Cargo mass too heavy for launch";
+      isCargoHeavy = true;
+    }
+
+    // Update launch status based on fuel and cargo conditions
+    if (isFuelLow || isCargoHeavy) {
+      document.getElementById("launchStatus").innerHTML =
+        "Shuttle Not Ready for Launch";
+      document.getElementById("launchStatus").style.color = "red";
+      document.getElementById(
+        "pilotStatus"
+      ).innerHTML = `Pilot ${pilot} is ready for launch`;
+      document.getElementById(
+        "copilotStatus"
+      ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
+      return;
+    } else {
+      // If everything is good to go, hide the faultyItems div
+      if (!isFuelLow && !isCargoHeavy) {
+        // Check if both fuel and cargo are good
+        document.getElementById("faultyItems").style.visibility = "hidden";
+      }
+
+      // Update launch status
+      document.getElementById("launchStatus").innerHTML =
+        "Shuttle is Ready for Launch";
+      document.getElementById("launchStatus").style.color = "green";
+      document.getElementById(
+        "pilotStatus"
+      ).innerHTML = `Pilot ${pilot} is ready for launch`;
+      document.getElementById(
+        "copilotStatus"
+      ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
+      return;
+    }
+
+    // Proceed with other form submission logic...
+  } else {
+    alertInvalidInput("fuel level or cargo mass");
+    return;
+  }
+}
+
+async function myFetch() {
+  let planetsReturned;
+
+  planetsReturned = await fetch(
+    "https://handlers.education.launchcode.org/static/planets.json"
+  ).then(function (response) {
+    return response.json();
+  });
+
   return planetsReturned;
-};
+}
 
-const pickPlanet = (planets) => {
-  const randomIndex = Math.floor(Math.random() * planets.length);
-  return planets[randomIndex];
-};
-
-const addDestinationInfo = (
+// Function to add destination information to the HTML
+function addDestinationInfo(
   document,
   name,
   diameter,
@@ -29,95 +130,34 @@ const addDestinationInfo = (
   distance,
   moons,
   imageUrl
-) => {
-  const missionTargetDiv = document.getElementById("missionTarget");
-  missionTargetDiv.innerHTML = `
+) {
+  // Construct HTML for displaying mission destination information
+  const missionDestination = `
     <h2>Mission Destination</h2>
     <ol>
-        <li>Name: ${name}</li>
-        <li>Diameter: ${diameter}</li>
-        <li>Star: ${star}</li>
-        <li>Distance from Earth: ${distance}</li>
-        <li>Number of Moons: ${moons}</li>
+      <li>Name: ${name}</li>
+      <li>Diameter: ${diameter}</li>
+      <li>Star: ${star}</li>
+      <li>Distance from Earth: ${distance}</li>
+      <li>Number of Moons: ${moons}</li>
     </ol>
-    <img src="${imageUrl}">
+    <img src="${imageUrl}" alt="Mission Destination Image">
   `;
-};
 
-const validateInput = (testInput) => {
-  return testInput === ""
-    ? "Empty"
-    : !isNaN(testInput)
-    ? "Is a Number"
-    : "Not a Number";
-};
+  // Update the HTML document with mission destination information
+  document.getElementById("missionTarget").innerHTML = missionDestination;
+}
 
-const formSubmission = (
-  document,
-  list,
-  pilotNameInput,
-  copilot,
-  fuelLevel,
-  cargoMass
-) => {
-  // Update pilot/copilot status
-  document.getElementById(
-    "pilotStatus"
-  ).innerHTML = `Pilot ${pilotNameInput} is ready for launch`;
-  document.getElementById(
-    "copilotStatus"
-  ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
+// Function to pick a planet from the provided list of planets
+function pickPlanet(planets) {
+  // Logic to pick a planet from the list of planets
+  // For simplicity, you can randomly select a planet from the list
+  const randomIndex = Math.floor(Math.random() * planets.length);
+  return planets[randomIndex];
+}
 
-  // Show the list
-  list.style.visibility = "visible";
-
-  // Check fuel levels and update faulty items
-  if (fuelLevel < 10000) {
-    document.getElementById("fuelStatus").innerHTML =
-      "Fuel level too low for launch";
-    document.getElementById("launchStatus").innerHTML =
-      "Shuttle Not Ready for Launch";
-    document.getElementById("launchStatus").style.color = "red";
-  } else {
-    document.getElementById("fuelStatus").innerHTML =
-      "Fuel level high enough for launch";
-  }
-
-  // Check cargo levels and update faulty items
-  if (cargoMass > 10000) {
-    document.getElementById("cargoStatus").innerHTML =
-      "Cargo mass too heavy for launch";
-    document.getElementById("launchStatus").innerHTML =
-      "Shuttle Not Ready for Launch";
-    document.getElementById("launchStatus").style.color = "red";
-  } else {
-    document.getElementById("cargoStatus").innerHTML =
-      "Cargo mass low enough for launch";
-  }
-
-  // Check if everything is fine
-  if (fuelLevel >= 10000 && cargoMass <= 10000) {
-    // If both fuel and cargo are within acceptable ranges, set the list element to visible
-    list.style.visibility = "visible";
-
-    // Hide the faulty items list
-    document.getElementById("faultyItems").style.visibility = "hidden";
-
-    // Update launch status
-    document.getElementById("launchStatus").innerHTML =
-      "Shuttle is Ready for Launch";
-    document.getElementById("launchStatus").style.color = "green";
-  } else {
-    // If there are issues, show the faulty items list and update launch status accordingly
-    document.getElementById("faultyItems").style.visibility = "visible";
-    document.getElementById("launchStatus").innerHTML =
-      "Shuttle Not Ready for Launch";
-    document.getElementById("launchStatus").style.color = "red";
-  }
-};
-
-module.exports.myFetch = myFetch;
-module.exports.pickPlanet = pickPlanet;
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
 module.exports.formSubmission = formSubmission;
+module.exports.pickPlanet = pickPlanet;
+module.exports.myFetch = myFetch;
