@@ -58,85 +58,56 @@ const formSubmission = (
   pilot,
   copilot,
   fuelLevel,
-  cargoLevel
+  cargoMass
 ) => {
-  // DOM elements
-  let pilotStatus = document.getElementById("pilotStatus");
-  let copilotStatus = document.getElementById("copilotStatus");
-  let fuelStatus = document.getElementById("fuelStatus");
-  let launchStatus = document.getElementById("launchStatus");
-  let cargoStatus = document.getElementById("cargoStatus");
+  // Update pilot/copilot status
+  document.getElementById(
+    "pilotStatus"
+  ).innerHTML = `Pilot ${pilot} is ready for launch`;
+  document.getElementById(
+    "copilotStatus"
+  ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
 
   // Reset previous changes
-  list.style.visibility = "hidden";
-
-  // Check if all fields are filled
-  if (
-    validateInput(pilot) === "Empty" ||
-    validateInput(copilot) === "Empty" ||
-    validateInput(fuelLevel) === "Empty" ||
-    validateInput(cargoLevel) === "Empty"
-  ) {
-    alert("All fields are required");
-    return;
-  }
-
-  // Check if fuelLevel and cargoLevel are numbers and pilot and co-pilot are strings
-  if (
-    validateInput(fuelLevel) === "Not a Number" ||
-    validateInput(cargoLevel) === "Not a Number"
-  ) {
-    alert("Please enter numerical values for Fuel Level and Cargo Mass");
-    return;
-  }
-
-  if (
-    validateInput(pilot) === "Is a Number" ||
-    validateInput(copilot) === "Is a Number"
-  ) {
-    alert("Please do not enter numbers for the pilot or co-pilot names");
-    return;
-  }
-
-  // Update pilot/copilot status
-  pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
-  copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
+  list.style.visibility = "visible";
 
   // Check fuel levels and update faulty items
-  if (Number(fuelLevel) < 10000) {
-    fuelStatus.innerHTML = `Fuel level too low for launch`;
-    list.style.visibility = "visible";
-    launchStatus.innerHTML = `Shuttle Not Ready for Launch`;
-    launchStatus.style.color = `red`;
+  if (fuelLevel < 10000) {
+    document.getElementById("fuelStatus").innerHTML =
+      "Fuel level too low for launch";
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle Not Ready for Launch";
+    document.getElementById("launchStatus").style.color = "red";
+    list.style.visibility = "visible"; // Ensure list is visible when there's an issue
   } else {
-    fuelStatus.innerHTML = `Fuel level high enough for launch`;
+    document.getElementById("fuelStatus").innerHTML =
+      "Fuel level high enough for launch";
   }
 
   // Check cargo levels and update faulty items
-  if (Number(cargoLevel) > 10000) {
-    cargoStatus.innerHTML = `Cargo mass too heavy for launch`;
-    list.style.visibility = `visible`;
-    launchStatus.innerHTML = `Shuttle Not Ready for Launch`;
-    launchStatus.style.color = `red`;
+  if (cargoMass > 10000) {
+    document.getElementById("cargoStatus").innerHTML =
+      "Cargo mass too heavy for launch";
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle Not Ready for Launch";
+    document.getElementById("launchStatus").style.color = "red";
+    list.style.visibility = "visible"; // Ensure list is visible when there's an issue
   } else {
-    cargoStatus.innerHTML = `Cargo mass low enough for launch`;
+    document.getElementById("cargoStatus").innerHTML =
+      "Cargo mass low enough for launch";
   }
 
   // Check if everything is fine
-  if (
-    fuelStatus.innerHTML === `Fuel level high enough for launch` &&
-    cargoStatus.innerHTML === `Cargo mass low enough for launch`
-  ) {
-    console.log("Hiding list...");
-    // Hide the list only when everything is fine
-    list.style.visibility = `hidden`;
-    launchStatus.innerHTML = `Shuttle is Ready for Launch`;
-    launchStatus.style.color = `green`;
+  if (fuelLevel >= 10000 && cargoMass <= 10000) {
+    list.style.visibility = "hidden"; // Hide the list when everything is fine
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle is Ready for Launch";
+    document.getElementById("launchStatus").style.color = "green";
   } else {
-    console.log("Not hiding list...");
-    // If there are any issues, show the list
-    launchStatus.innerHTML = `Shuttle Not Ready for Launch`;
-    launchStatus.style.color = `red`;
+    document.getElementById("faultyItems").style.visibility = "visible"; // Show the list if there are issues
+    document.getElementById("launchStatus").innerHTML =
+      "Shuttle Not Ready for Launch";
+    document.getElementById("launchStatus").style.color = "red";
   }
 };
 

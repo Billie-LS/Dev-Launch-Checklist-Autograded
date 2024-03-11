@@ -10,24 +10,19 @@ const initializeForm = () => {
 };
 
 // Function to handle form submission
-// Function to handle form submission
 const handleFormSubmit = async () => {
   // Retrieve form inputs
   const pilot = document.querySelector("input[name=pilotName]").value;
   const copilot = document.querySelector("input[name=copilotName]").value;
-  const fuelLevel = parseFloat(
-    document.querySelector("input[name=fuelLevel]").value
-  );
-  const cargoMass = parseFloat(
-    document.querySelector("input[name=cargoMass]").value
-  );
+  const fuelLevel = document.querySelector("input[name=fuelLevel]").value;
+  const cargoLevel = document.querySelector("input[name=cargoMass]").value;
   const list = document.getElementById("faultyItems");
 
   // Reset previous changes
   list.style.visibility = "hidden";
 
   // Use formSubmission to validate and update list
-  formSubmission(document, list, pilot, copilot, fuelLevel, cargoMass);
+  formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel);
 
   // Check if everything is fine
   if (list.style.visibility !== "visible") {
