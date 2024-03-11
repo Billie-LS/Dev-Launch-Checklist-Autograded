@@ -10,7 +10,6 @@ const initializeForm = () => {
 };
 
 // Function to handle form submission
-// Function to handle form submission
 const handleFormSubmit = async () => {
   // Retrieve form inputs
   const pilot = document.querySelector("input[name=pilotName]").value;

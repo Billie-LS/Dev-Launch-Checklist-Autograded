@@ -55,7 +55,7 @@ const validateInput = (testInput) => {
 const formSubmission = (
   document,
   list,
-  pilot,
+  pilotNameInput,
   copilot,
   fuelLevel,
   cargoMass
@@ -63,12 +63,12 @@ const formSubmission = (
   // Update pilot/copilot status
   document.getElementById(
     "pilotStatus"
-  ).innerHTML = `Pilot ${pilot} is ready for launch`;
+  ).innerHTML = `Pilot ${pilotNameInput} is ready for launch`;
   document.getElementById(
     "copilotStatus"
   ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
 
-  // Reset previous changes
+  // Show the list
   list.style.visibility = "visible";
 
   // Check fuel levels and update faulty items
@@ -78,7 +78,7 @@ const formSubmission = (
     document.getElementById("launchStatus").innerHTML =
       "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
-    list.style.visibility = "visible"; // Ensure list is visible when there's an issue
+    // document.getElementById("faultyItems").style.visibility = "visible"; // Show the list if there's an issue
   } else {
     document.getElementById("fuelStatus").innerHTML =
       "Fuel level high enough for launch";
@@ -91,7 +91,7 @@ const formSubmission = (
     document.getElementById("launchStatus").innerHTML =
       "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
-    list.style.visibility = "visible"; // Ensure list is visible when there's an issue
+    // document.getElementById("faultyItems").style.visibility = "visible"; // Show the list if there's an issue
   } else {
     document.getElementById("cargoStatus").innerHTML =
       "Cargo mass low enough for launch";
@@ -99,7 +99,7 @@ const formSubmission = (
 
   // Check if everything is fine
   if (fuelLevel >= 10000 && cargoMass <= 10000) {
-    list.style.visibility = "hidden"; // Hide the list when everything is fine
+    document.getElementById("faultyItems").style.visibility = "hidden"; // Hide the list when everything is fine
     document.getElementById("launchStatus").innerHTML =
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
