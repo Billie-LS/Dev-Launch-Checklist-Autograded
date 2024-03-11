@@ -1,13 +1,31 @@
 // Write your JavaScript code here!
 
 // Event listener for when the window loads
+// Function to initialize the form
 const initializeForm = () => {
   const form = document.querySelector("form");
-  form.addEventListener("submit", async (event) => {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
-    handleFormSubmit();
+    let pilot = document.querySelector("input[name=pilotName]").value;
+    let copilot = document.querySelector("input[name=copilotName]").value;
+    let fuelLevel = parseFloat(
+      document.querySelector("input[name=fuelLevel]").value
+    );
+    let cargoMass = parseFloat(
+      document.querySelector("input[name=cargoMass]").value
+    );
+    console.log("form listener triggered");
+    let list = document.getElementById("faultyItems");
+
+    formSubmission(document, list, pilot, copilot, fuelLevel, cargoMass);
   });
 };
+
+// Event listener for when the window loads
+window.addEventListener("load", () => {
+  // Initialize the form
+  initializeForm();
+});
 
 // Function to handle form submission
 const handleFormSubmit = async () => {

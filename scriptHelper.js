@@ -71,40 +71,35 @@ const formSubmission = (
   // Show the list
   list.style.visibility = "visible";
 
-  // Check fuel levels and update faulty items
   if (fuelLevel < 10000) {
     document.getElementById("fuelStatus").innerHTML =
       "Fuel level too low for launch";
     document.getElementById("launchStatus").innerHTML =
       "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
-    // document.getElementById("faultyItems").style.visibility = "visible"; // Show the list if there's an issue
   } else {
     document.getElementById("fuelStatus").innerHTML =
       "Fuel level high enough for launch";
   }
 
-  // Check cargo levels and update faulty items
   if (cargoMass > 10000) {
     document.getElementById("cargoStatus").innerHTML =
       "Cargo mass too heavy for launch";
     document.getElementById("launchStatus").innerHTML =
       "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
-    // document.getElementById("faultyItems").style.visibility = "visible"; // Show the list if there's an issue
   } else {
     document.getElementById("cargoStatus").innerHTML =
       "Cargo mass low enough for launch";
   }
 
-  // Check if everything is fine
   if (fuelLevel >= 10000 && cargoMass <= 10000) {
-    document.getElementById("faultyItems").style.visibility = "hidden"; // Hide the list when everything is fine
+    document.getElementById("faultyItems").style.visibility = "hidden";
     document.getElementById("launchStatus").innerHTML =
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
   } else {
-    document.getElementById("faultyItems").style.visibility = "visible"; // Show the list if there are issues
+    document.getElementById("faultyItems").style.visibility = "visible";
     document.getElementById("launchStatus").innerHTML =
       "Shuttle Not Ready for Launch";
     document.getElementById("launchStatus").style.color = "red";
