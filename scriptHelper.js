@@ -71,6 +71,7 @@ const formSubmission = (
   // Show the list
   list.style.visibility = "visible";
 
+  // Check fuel levels and update faulty items
   if (fuelLevel < 10000) {
     document.getElementById("fuelStatus").innerHTML =
       "Fuel level too low for launch";
@@ -82,6 +83,7 @@ const formSubmission = (
       "Fuel level high enough for launch";
   }
 
+  // Check cargo levels and update faulty items
   if (cargoMass > 10000) {
     document.getElementById("cargoStatus").innerHTML =
       "Cargo mass too heavy for launch";
@@ -93,12 +95,20 @@ const formSubmission = (
       "Cargo mass low enough for launch";
   }
 
+  // Check if everything is fine
   if (fuelLevel >= 10000 && cargoMass <= 10000) {
+    // If both fuel and cargo are within acceptable ranges, set the list element to visible
+    list.style.visibility = "visible";
+
+    // Hide the faulty items list
     document.getElementById("faultyItems").style.visibility = "hidden";
+
+    // Update launch status
     document.getElementById("launchStatus").innerHTML =
       "Shuttle is Ready for Launch";
     document.getElementById("launchStatus").style.color = "green";
   } else {
+    // If there are issues, show the faulty items list and update launch status accordingly
     document.getElementById("faultyItems").style.visibility = "visible";
     document.getElementById("launchStatus").innerHTML =
       "Shuttle Not Ready for Launch";
