@@ -1,6 +1,9 @@
 // Write your helper functions here!
+
+// Import the necessary polyfill for making fetch requests
 require("cross-fetch/polyfill");
 
+// Define a function to add destination information to the DOM
 const addDestinationInfo = (
   document,
   name,
@@ -10,9 +13,10 @@ const addDestinationInfo = (
   moons,
   imageUrl
 ) => {
+  // Get the mission target element from the DOM
   const missionTarget = document.getElementById("missionTarget");
 
-  // Here is the HTML formatting for our mission target div.
+  // Set the HTML content of the mission target element with the provided destination information
   missionTarget.innerHTML = `
                  <h2>Mission Destination</h2>
                  <ol>
@@ -25,17 +29,23 @@ const addDestinationInfo = (
                  <img src="${imageUrl}">`;
 };
 
-//function to determine if testInput is empty, a number, or string
+// Define a function to validate input (empty, number, or string)
 const validateInput = (testInput) => {
+  // Check if the input is empty
   if (testInput === "") {
     return "Empty";
-  } else if (isNaN(testInput)) {
+  }
+  // Check if the input is not a number
+  else if (isNaN(testInput)) {
     return "Not a Number";
-  } else if (!isNaN(testInput)) {
+  }
+  // Check if the input is a number
+  else if (!isNaN(testInput)) {
     return "Is a Number";
   }
 };
 
+// Define a function to handle form submission and perform input validation
 const formSubmission = (
   document,
   list,
@@ -44,9 +54,7 @@ const formSubmission = (
   fuelLevel,
   cargoLevel
 ) => {
-  // first three if statements are validating fields - no point in running rest of code if these do not pass
-
-  // make sure all inputs are not empty
+  // Validate if any of the required fields are empty
   if (
     validateInput(pilot) === "Empty" ||
     validateInput(copilot) === "Empty" ||
@@ -57,7 +65,7 @@ const formSubmission = (
     return;
   }
 
-  // make sure pilot & copilot are strings
+  // Validate if pilot and copilot inputs are strings
   if (
     validateInput(pilot) === "Is a Number" ||
     validateInput(copilot) === "Is a Number"
@@ -66,7 +74,7 @@ const formSubmission = (
     return;
   }
 
-  // make sure fuelLevel & cargoLevel inputs are numbers
+  // Validate if fuelLevel and cargoLevel inputs are numbers
   if (
     validateInput(fuelLevel) === "Not a Number" ||
     validateInput(cargoLevel) === "Not a Number"
@@ -75,18 +83,18 @@ const formSubmission = (
     return;
   }
 
-  // grabbing elements from the DOM - no point in initializing if validation fails
+  // Get references to DOM elements for displaying status messages
   const pilotStatus = document.getElementById("pilotStatus");
   const copilotStatus = document.getElementById("copilotStatus");
   const fuelStatus = document.getElementById("fuelStatus");
   const cargoStatus = document.getElementById("cargoStatus");
   const launchStatus = document.getElementById("launchStatus");
 
-  // after validation, pilot info text should change
+  // Update pilot and copilot status messages
   pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
   copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
 
-  // update fuelStatus depending on fuelLevel input
+  // Update fuelStatus message based on fuelLevel input
   if (fuelLevel < 10000) {
     list.style.visibility = "visible";
     fuelStatus.innerHTML = "Fuel level too low for launch";
@@ -96,7 +104,7 @@ const formSubmission = (
     fuelStatus.innerHTML = "Fuel level high enough for launch";
   }
 
-  // update cargoStatus depending on cargoLevel input
+  // Update cargoStatus message based on cargoLevel input
   if (cargoLevel > 10000) {
     list.style.visibility = "visible";
     cargoStatus.innerHTML = "Cargo mass too heavy for launch";
@@ -106,7 +114,7 @@ const formSubmission = (
     cargoStatus.innerHTML = "Cargo mass low enough for launch";
   }
 
-  // if every field passes all above checks, should be ready to launch
+  // If all validation passes, set launch status to ready
   if (
     fuelStatus.innerHTML === `Fuel level high enough for launch` &&
     cargoStatus.innerHTML === `Cargo mass low enough for launch`
@@ -117,21 +125,32 @@ const formSubmission = (
   }
 };
 
+// Define an asynchronous function to fetch planet data from a remote endpoint
 const myFetch = async () => {
   let planetsReturned;
 
+  // Fetch planet data from a remote JSON file
   const response = await fetch(
     "https://handlers.education.launchcode.org/static/planets.json"
   );
+
+  // Extract and parse the JSON data from the response
   planetsReturned = await response.json();
+
+  // Return the fetched planet data
   return planetsReturned;
 };
 
+// Define a function to pick a random planet from the provided list of planets
 const pickPlanet = (planets) => {
+  // Generate a random index within the range of the planets array
   let index = Math.floor(Math.random() * planets.length);
+
+  // Return the planet at the randomly generated index
   return planets[index];
 };
 
+// Export helper functions for use in other modules
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
 module.exports.formSubmission = formSubmission;
