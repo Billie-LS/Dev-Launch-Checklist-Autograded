@@ -1,5 +1,5 @@
 // Write your helper functions here!
-// require("cross-fetch/polyfill");
+require("cross-fetch/polyfill");
 
 const addDestinationInfo = (
   document,
@@ -53,7 +53,7 @@ const formSubmission = (
     validateInput(fuelLevel) === "Empty" ||
     validateInput(cargoLevel) === "Empty"
   ) {
-    //alert("All fields are required!");
+    alert("All fields are required!");
     return;
   }
 
@@ -62,7 +62,7 @@ const formSubmission = (
     validateInput(pilot) === "Is a Number" ||
     validateInput(copilot) === "Is a Number"
   ) {
-    //alert("Pilot AND copilot inputs must be strings");
+    alert("Pilot AND copilot inputs must be strings");
     return;
   }
 
@@ -71,7 +71,7 @@ const formSubmission = (
     validateInput(fuelLevel) === "Not a Number" ||
     validateInput(cargoLevel) === "Not a Number"
   ) {
-    //alert("Fuel AND cargo level must be number inputs");
+    alert("Fuel AND cargo level must be number inputs");
     return;
   }
 
@@ -119,7 +119,7 @@ const formSubmission = (
 
 const myFetch = async () => {
   let planetsReturned;
-  // this is what chatgpt is saying to use. why does this work and above doesnt?
+
   const response = await fetch(
     "https://handlers.education.launchcode.org/static/planets.json"
   );
