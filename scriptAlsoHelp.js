@@ -2,8 +2,8 @@
 
 const { myFetch, pickPlanet, addDestinationInfo } = require("./scriptHelper");
 
-window.addEventListener("load", function () {
-  myFetch().then(function (listedPlanets) {
+window.addEventListener("load", () => {
+  myFetch().then((listedPlanets) => {
     console.log(listedPlanets);
     // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
     const planet = pickPlanet(listedPlanets);
@@ -21,7 +21,7 @@ window.addEventListener("load", function () {
 
   const button = document.getElementById("formSubmit");
 
-  button.addEventListener("click", function (e) {
+  button.addEventListener("click", (e) => {
     e.preventDefault();
     formSubmission(
       document,

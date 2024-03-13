@@ -1,7 +1,7 @@
 // Write your helper functions here!
 // require("cross-fetch/polyfill");
 
-function addDestinationInfo(
+const addDestinationInfo = (
   document,
   name,
   diameter,
@@ -9,7 +9,7 @@ function addDestinationInfo(
   distance,
   moons,
   imageUrl
-) {
+) => {
   const missionTarget = document.getElementById("missionTarget");
 
   // Here is the HTML formatting for our mission target div.
@@ -23,10 +23,10 @@ function addDestinationInfo(
                      <li>Number of Moons: ${moons}</li>
                  </ol>
                  <img src="${imageUrl}">`;
-}
+};
 
 //function to determine if testInput is empty, a number, or string
-function validateInput(testInput) {
+const validateInput = (testInput) => {
   if (testInput === "") {
     return "Empty";
   } else if (isNaN(testInput)) {
@@ -34,9 +34,16 @@ function validateInput(testInput) {
   } else if (!isNaN(testInput)) {
     return "Is a Number";
   }
-}
+};
 
-function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+const formSubmission = (
+  document,
+  list,
+  pilot,
+  copilot,
+  fuelLevel,
+  cargoLevel
+) => {
   // first three if statements are validating fields - no point in running rest of code if these do not pass
 
   // make sure all inputs are not empty
@@ -108,9 +115,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     launchStatus.innerHTML = `Shuttle is Ready for Launch`;
     launchStatus.style.color = `green`;
   }
-}
+};
 
-async function myFetch() {
+const myFetch = async () => {
   let planetsReturned;
   // this is what chatgpt is saying to use. why does this work and above doesnt?
   const response = await fetch(
@@ -118,12 +125,12 @@ async function myFetch() {
   );
   planetsReturned = await response.json();
   return planetsReturned;
-}
+};
 
-function pickPlanet(planets) {
+const pickPlanet = (planets) => {
   let index = Math.floor(Math.random() * planets.length);
   return planets[index];
-}
+};
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
