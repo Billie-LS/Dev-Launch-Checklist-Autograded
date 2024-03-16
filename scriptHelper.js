@@ -3,7 +3,7 @@
 //require('cross-fetch/polyfill');
 
 //Adds destination information to the mission target element
-let addDestinationInfo = (
+const addDestinationInfo = (
   document,
   name,
   diameter,
@@ -28,7 +28,7 @@ let addDestinationInfo = (
 };
 
 // Validates input values
-let validateInput = (testInput) => {
+const validateInput = (testInput) => {
   if (testInput === "") {
     return "Empty";
   } else if (!isNaN(testInput)) {
@@ -39,7 +39,14 @@ let validateInput = (testInput) => {
 };
 
 // Handles form submission
-let formSubmission = (document, list, pilot, copilot, fuelLevel, cargoMass) => {
+const formSubmission = (
+  document,
+  list,
+  pilot,
+  copilot,
+  fuelLevel,
+  cargoMass
+) => {
   let pilotValidation = validateInput(pilot);
   let copilotValidation = validateInput(copilot);
   let fuelLevelValidation = validateInput(fuelLevel);
@@ -112,13 +119,13 @@ let formSubmission = (document, list, pilot, copilot, fuelLevel, cargoMass) => {
 };
 
 // Picks a random planet from the provided array of planets
-let pickPlanet = (planets) => {
+const pickPlanet = (planets) => {
   let randomIndex = Math.floor(Math.random() * planets.length);
   return planets[randomIndex];
 };
 
 // Fetches planetary data from the provided URL
-async function myFetch() {
+const myFetch = async () => {
   let response = await fetch(
     "https://handlers.education.launchcode.org/static/planets.json"
   );
@@ -130,7 +137,7 @@ async function myFetch() {
 
   let planetsReturned = await response.json();
   return planetsReturned;
-}
+};
 
 // Export helper functions for use in other modules
 module.exports.addDestinationInfo = addDestinationInfo;

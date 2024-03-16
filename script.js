@@ -1,10 +1,10 @@
 // Write your JavaScript code here!
 
 // wait window load then execute the code
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   let form = document.querySelector("form");
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", (event) => {
     // Prevent default form submission behavior
     event.preventDefault();
     // event.stopPropagation();
@@ -30,7 +30,7 @@ window.addEventListener("load", function () {
   // Set listedPlanetsResponse equal to the value returned by calling myFetch()
   let listedPlanetsResponse = myFetch();
   listedPlanetsResponse
-    .then(function (result) {
+    .then((result) => {
       listedPlanets = result;
       let randomPlanet = pickPlanet(listedPlanets);
       addDestinationInfo(
@@ -46,10 +46,10 @@ window.addEventListener("load", function () {
       //console.log(listedPlanets);
       // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
     })
-    .then(function () {
+    .then(() => {
       console.log(listedPlanets);
     })
-    .catch(function (error) {
+    .catch((error) => {
       // Handle any errors that occur during the fetch operation
       console.error("Error fetching planets:", error);
 
