@@ -1,10 +1,9 @@
 // Write your helper functions here!
 
-// Import the necessary polyfill for making fetch requests
-require("cross-fetch/polyfill");
+//require('cross-fetch/polyfill');
 
-// Define a function to add destination information to the DOM
-const addDestinationInfo = (
+//Adds destination information to the mission target element
+let addDestinationInfo = (
   document,
   name,
   diameter,
@@ -13,142 +12,125 @@ const addDestinationInfo = (
   moons,
   imageUrl
 ) => {
-  // Get the mission target element from the DOM
-  const missionTarget = document.getElementById("missionTarget");
+  let missionTarget = document.getElementById("missionTarget");
 
-  // Set the HTML content of the mission target element with the provided destination information
+  // Set HTML content with provided data
   missionTarget.innerHTML = `
-                 <h2>Mission Destination</h2>
-                 <ol>
-                     <li>Name: ${name}</li>
-                     <li>Diameter: ${diameter}</li>
-                     <li>Star: ${star}</li>
-                     <li>Distance from Earth: ${distance}</li>
-                     <li>Number of Moons: ${moons}</li>
-                 </ol>
-                 <img src="${imageUrl}">`;
+      <h2>Mission Destination</h2>
+      <ol>
+          <li>Name: ${name}</li>
+          <li>Diameter: ${diameter}</li>
+          <li>Star: ${star}</li>
+          <li>Distance from Earth: ${distance}</li>
+          <li>Number of Moons: ${moons}</li>
+      </ol>
+      <img src="${imageUrl}">`;
 };
 
-// Define a function to validate input (empty, number, or string)
-const validateInput = (testInput) => {
-  // Check if the input is empty
+// Validates input values
+let validateInput = (testInput) => {
   if (testInput === "") {
     return "Empty";
-  }
-  // Check if the input is not a number
-  else if (isNaN(testInput)) {
-    return "Not a Number";
-  }
-  // Check if the input is a number
-  else if (!isNaN(testInput)) {
+  } else if (!isNaN(testInput)) {
     return "Is a Number";
+  } else {
+    return "Not a Number";
   }
 };
 
-// Define a function to handle form submission and perform input validation
-const formSubmission = (
-  document,
-  list,
-  pilot,
-  copilot,
-  fuelLevel,
-  cargoLevel
-) => {
-  // Validate if any of the required fields are empty
+// Handles form submission
+let formSubmission = (document, list, pilot, copilot, fuelLevel, cargoMass) => {
+  let pilotValidation = validateInput(pilot);
+  let copilotValidation = validateInput(copilot);
+  let fuelLevelValidation = validateInput(fuelLevel);
+  let cargoMassValidation = validateInput(cargoMass);
+
+  // if (pilot === "" || copilot === "" || fuelLevel === "" || cargoMass === "") {
   if (
-    validateInput(pilot) === "Empty" ||
-    validateInput(copilot) === "Empty" ||
-    validateInput(fuelLevel) === "Empty" ||
-    validateInput(cargoLevel) === "Empty"
+    pilotValidation === "Empty" ||
+    copilotValidation === "Empty" ||
+    fuelLevelValidation === "Empty" ||
+    cargoMassValidation === "Empty"
   ) {
+    //console.log("All fields are required!");
     alert("All fields are required!");
     return;
   }
 
-  // Validate if pilot and copilot inputs are strings
-  if (
-    validateInput(pilot) === "Is a Number" ||
-    validateInput(copilot) === "Is a Number"
+  // if (isNaN(fuelLevel) || isNaN(cargoMass)) {
+  else if (
+    pilotValidation === "Is a Number" ||
+    copilotValidation === "Is a Number" ||
+    fuelLevelValidation == "Not a Number" ||
+    cargoMassValidation == "Not a Number"
   ) {
-    alert("Pilot AND copilot inputs must be strings");
+    // console.log("Please enter valid information for all fields!");
+    alert("Please enter valid information for all fields!");
     return;
-  }
-
-  // Validate if fuelLevel and cargoLevel inputs are numbers
-  if (
-    validateInput(fuelLevel) === "Not a Number" ||
-    validateInput(cargoLevel) === "Not a Number"
-  ) {
-    alert("Fuel AND cargo level must be number inputs");
-    return;
-  }
-
-  // Get references to DOM elements for displaying status messages
-  const pilotStatus = document.getElementById("pilotStatus");
-  const copilotStatus = document.getElementById("copilotStatus");
-  const fuelStatus = document.getElementById("fuelStatus");
-  const cargoStatus = document.getElementById("cargoStatus");
-  const launchStatus = document.getElementById("launchStatus");
-
-  // Update pilot and copilot status messages
-  pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
-  copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
-
-  // Update fuelStatus message based on fuelLevel input
-  if (fuelLevel < 10000) {
-    list.style.visibility = "visible";
-    fuelStatus.innerHTML = "Fuel level too low for launch";
-    launchStatus.innerHTML = "Shuttle Not Ready for Launch";
-    launchStatus.style.color = "red";
   } else {
-    fuelStatus.innerHTML = "Fuel level high enough for launch";
-  }
-
-  // Update cargoStatus message based on cargoLevel input
-  if (cargoLevel > 10000) {
+    document.getElementById(
+      "pilotStatus"
+    ).innerHTML = `Pilot ${pilot} is ready for launch`;
+    document.getElementById(
+      "copilotStatus"
+    ).innerHTML = `Co-pilot ${copilot} is ready for launch`;
     list.style.visibility = "visible";
-    cargoStatus.innerHTML = "Cargo mass too heavy for launch";
-    launchStatus.innerHTML = "Shuttle Not Ready for Launch";
-    launchStatus.style.color = "red";
-  } else {
-    cargoStatus.innerHTML = "Cargo mass low enough for launch";
-  }
 
-  // If all validation passes, set launch status to ready
-  if (
-    fuelStatus.innerHTML === `Fuel level high enough for launch` &&
-    cargoStatus.innerHTML === `Cargo mass low enough for launch`
-  ) {
-    list.style.visibility = `visible`;
-    launchStatus.innerHTML = `Shuttle is Ready for Launch`;
-    launchStatus.style.color = `green`;
+    if (fuelLevel < 10000) {
+      document.getElementById("fuelStatus").innerHTML =
+        "Fuel level too low for launch";
+      document.getElementById("launchStatus").innerHTML =
+        "Shuttle Not Ready for Launch";
+      document.getElementById("launchStatus").style.color = "red";
+    } else {
+      document.getElementById("fuelStatus").innerHTML =
+        "Fuel level high enough for launch";
+    }
+
+    if (cargoMass > 10000) {
+      document.getElementById("cargoStatus").innerHTML =
+        "Cargo mass too heavy for launch";
+      document.getElementById("launchStatus").innerHTML =
+        "Shuttle Not Ready for Launch";
+      document.getElementById("launchStatus").style.color = "red";
+    } else {
+      document.getElementById("cargoStatus").innerHTML =
+        "Cargo mass low enough for launch";
+    }
+
+    if (fuelLevel >= 10000 && cargoMass <= 10000) {
+      list.style.visible = "hidden";
+      document.getElementById("launchStatus").innerHTML =
+        "Shuttle is Ready for Launch";
+      document.getElementById("launchStatus").style.color = "green";
+    } else {
+      document.getElementById("launchStatus").innerHTML =
+        "Shuttle Not Ready for Launch";
+      document.getElementById("launchStatus").style.color = "red";
+    }
   }
 };
 
-// Define an asynchronous function to fetch planet data from a remote endpoint
-const myFetch = async () => {
-  let planetsReturned;
+// Picks a random planet from the provided array of planets
+let pickPlanet = (planets) => {
+  let randomIndex = Math.floor(Math.random() * planets.length);
+  return planets[randomIndex];
+};
 
-  // Fetch planet data from a remote JSON file
-  const response = await fetch(
+// Fetches planetary data from the provided URL
+async function myFetch() {
+  let response = await fetch(
     "https://handlers.education.launchcode.org/static/planets.json"
   );
 
-  // Extract and parse the JSON data from the response
-  planetsReturned = await response.json();
+  if (!response.ok) {
+    console.error("Failed to fetch planets data");
+    return [];
+  }
 
-  // Return the fetched planet data
+  let planetsReturned = await response.json();
   return planetsReturned;
-};
-
-// Define a function to pick a random planet from the provided list of planets
-const pickPlanet = (planets) => {
-  // Generate a random index within the range of the planets array
-  let index = Math.floor(Math.random() * planets.length);
-
-  // Return the planet at the randomly generated index
-  return planets[index];
-};
+}
 
 // Export helper functions for use in other modules
 module.exports.addDestinationInfo = addDestinationInfo;
