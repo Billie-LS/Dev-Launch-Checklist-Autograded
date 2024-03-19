@@ -1,14 +1,14 @@
 // Write your JavaScript code here!
 
 // wait window load then execute the code
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   // Retrieve form element (adjust the selector as needed)
   // const myForm = document.querySelector('form[name=myForm]');
 
   // Attach formSubmission to form submission
   let form = document.querySelector("form");
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", (event) => {
     // Prevent default form submission behavior
     event.preventDefault();
     let pilot = document.querySelector("input[name=pilotName]").value;
@@ -26,11 +26,11 @@ window.addEventListener("load", function () {
   //Set listedPlanetsResponse equal to the value returned by calling myFetch()
   let listedPlanetsResponse = myFetch();
   listedPlanetsResponse
-    .then(function (result) {
+    .then((result) => {
       listedPlanets = result;
       console.log(listedPlanets);
     })
-    .then(function () {
+    .then(() => {
       console.log(listedPlanets);
       // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
       let pickedPlanet = pickPlanet(listedPlanets);
@@ -44,7 +44,7 @@ window.addEventListener("load", function () {
         pickedPlanet.image
       );
     })
-    .catch(function (planetsFetchingError) {
+    .catch((planetsFetchingError) => {
       // Handle any errors that occur during the fetch operation
       console.error("Error fetching planets:", error);
     });
